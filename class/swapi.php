@@ -29,6 +29,7 @@ class StarWarsApi
             //Caso retorne na consulta valores sem nave
             if(!empty($response['results'][$i]['name']))
             {
+                $mglt = $response['results'][$i]['MGLT'];
                
                 //Verifico a data (hoje + dias, semanas, meses que a nave pode viajar sem paradas)
                 $data =  date('d-m-Y', strtotime($response['results'][$i]['consumables']));
@@ -38,7 +39,7 @@ class StarWarsApi
                 //Retorna a diferença em dias de hoje até a data máxima
                 $diff=date_diff($data_inicio,$data_fim);
                 //Retorna a quantia de MGLT que a nave consegue rodar sem parar
-                $consumables = $diff->format("%a")*24*75;
+                $consumables = $diff->format("%a")*24*$mglt;
                 
                 //Retorna o total de paradas necessárias
                 $total = intval($post/$consumables);
